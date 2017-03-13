@@ -19,6 +19,7 @@
         <lombok.version>1.16.12</lombok.version>
         <apache.commons.lang.version>3.5</apache.commons.lang.version>
         <apache.commons.collections.version>4.1</apache.commons.collections.version>
+        <smsapi.version>2.3</smsapi.version>
         <spock.version>1.0-groovy-2.4</spock.version>
         <objenesis.version>2.1</objenesis.version>
         <nodep.version>3.1</nodep.version>
@@ -61,6 +62,21 @@
             <groupId>pl.wavesoftware</groupId>
             <artifactId>eid-exceptions</artifactId>
             <version>1.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>pl.smsapi</groupId>
+            <artifactId>smsapi-lib</artifactId>
+            <version>${smsapi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20160810</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.2</version>
         </dependency>
         <!-- test -->
         <dependency>
@@ -145,6 +161,17 @@
             <id>prime-repo</id>
             <name>PrimeFaces Maven Repository</name>
             <url>http://repository.primefaces.org</url>
+            <layout>default</layout>
+        </repository>
+        <repository>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+                <checksumPolicy>fail</checksumPolicy>
+            </releases>
+            <id>smsapi</id>
+            <name>smsapi</name>
+            <url>http://labs.smsapi.com/maven/</url>
             <layout>default</layout>
         </repository>
     </repositories>
