@@ -25,4 +25,12 @@ public class ResponseStatusDetail {
         return new ResponseStatusDetail(ResponseStatus.FAIL, message);
     }
 
+    public boolean isSuccess() {
+        return status == ResponseStatus.OK;
+    }
+
+    public boolean isFail() {
+        return status == ResponseStatus.FAIL;
+    }
+
 }

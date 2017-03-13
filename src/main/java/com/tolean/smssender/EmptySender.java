@@ -9,7 +9,7 @@ public class EmptySender implements SmsSender {
 
     @Override
     public ResponseStatusDetail send(String text, String phoneNo) {
-        return null;
+        return ResponseStatusDetail.ok();
     }
 
 }
