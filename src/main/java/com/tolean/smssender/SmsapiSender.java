@@ -3,6 +3,7 @@ package com.tolean.smssender;
 import com.tolean.smssender.providerConfiguration.SmsapiProviderConfiguration;
 import com.tolean.smssender.response.ResponseStatusDetail;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 import pl.smsapi.Client;
 import pl.smsapi.api.SmsFactory;
 import pl.smsapi.api.action.sms.SMSSend;
@@ -32,7 +33,7 @@ public class SmsapiSender implements SmsSender {
         smsFactory = new SmsFactory(client);
     }
 
-    @Override
+    @Async("smsSenderThreadPoolTaskExecutor")
     public ResponseStatusDetail send(String text, String phoneNo) {
         SMSSend sms = smsFactory.actionSend()
                 .setText(text)

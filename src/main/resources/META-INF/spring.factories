@@ -1,3 +1,2 @@
 # Auto Configure
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.tolean.smssender.SmsSenderAutoconfigure
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.tolean.smssender.SmsSenderAutoConfigure

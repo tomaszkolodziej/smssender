@@ -4,35 +4,41 @@ import com.tolean.smssender.providerConfiguration.ProviderConfiguration;
 import com.tolean.smssender.providerConfiguration.SmsapiProviderConfiguration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import pl.smsapi.exception.ClientException;
 
 import java.util.Optional;
+import java.util.concurrent.Executor;
 
 /**
  * Created by Tomasz Kołodziej
  */
 @Configuration
-@ConditionalOnClass({EnableSmsSender.class})
+@ConditionalOnBean({SmsSender.class})
+@EnableAsync
 @EnableConfigurationProperties({GlobalConfiguration.class, SmsapiProviderConfiguration.class})
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class SmsSenderAutoconfigure {
+public class SmsSenderAutoConfigure {
 
     private final GlobalConfiguration globalConfiguration;
     private final SmsapiProviderConfiguration smsapiProviderConfiguration;
 
     @Bean
-    @ConditionalOnClass({EnableSmsSender.class})
     public SmsSender smsSender() throws ClientException {
         Optional<ProviderConfiguration> providerConfigurationOptional = getProviderConfiguration();
 
-        if (providerConfigurationOptional.isPresent()) {
-            return new SmsapiSender((SmsapiProviderConfiguration) providerConfigurationOptional.get());
-        } else {
+        if (!providerConfigurationOptional.isPresent()) {
             return new EmptySender();
+        }
+
+        switch (providerConfigurationOptional.get().getType()) {
+            case SMSAPI: return new SmsapiSender((SmsapiProviderConfiguration) providerConfigurationOptional.get());
+            default: return new EmptySender();
         }
     }
 
@@ -43,6 +49,11 @@ public class SmsSenderAutoconfigure {
             }
         }
         return Optional.empty();
+    }
+
+    @Bean(name = "smsSenderThreadPoolTaskExecutor")
+    public Executor smsSenderThreadPoolTaskExecutor() {
+        return new ThreadPoolTaskExecutor();
     }
 
 }

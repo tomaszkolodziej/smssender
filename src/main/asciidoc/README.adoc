@@ -1,0 +1,16 @@
+[sidebar]
+*SMS Sender ver. {projectVersion}*
+
+IMPORTANT: Należy ustawić wartość dla ustawienia `tolean.smssender.defaultProvider`
+
+.Dostępne ustawienia:
+[horizontal]
+`tolean.smssender.defaultProvider`:: dostawca / bramka SMS. Dostępne wartości: SMSAPI
+`tolean.smssender.smsapi.username`:: nazwa użytkownika
+`tolean.smssender.smsapi.passwordHash`:: hasło użytkownika (MD5)
+
+Włączyć konfigurację przy pomocy `@EnableSmsSender`. Wstrzyknąć `SmsSender`.
+
+.Linki
+:linkattrs:
+* _strona providera https://www.smsapi.pl[SMSAPI, window="_blank"]_
