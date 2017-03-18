@@ -2,12 +2,10 @@ package com.tolean.smssender;
 
 import com.tolean.smssender.providerConfiguration.ProviderConfiguration;
 import com.tolean.smssender.providerConfiguration.SmsapiProviderConfiguration;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -20,17 +18,22 @@ import java.util.concurrent.Executor;
  * Created by Tomasz Kołodziej
  */
 @Configuration
-@ConditionalOnBean(annotation = EnableSmsSender.class)
+@ComponentScan
 @EnableAsync
 @EnableConfigurationProperties({GlobalConfiguration.class, SmsapiProviderConfiguration.class})
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SmsSenderAutoConfigure {
 
     private final GlobalConfiguration globalConfiguration;
     private final SmsapiProviderConfiguration smsapiProviderConfiguration;
 
+    @Autowired
+    public SmsSenderAutoConfigure(GlobalConfiguration globalConfiguration,
+                                  SmsapiProviderConfiguration smsapiProviderConfiguration) {
+        this.globalConfiguration = globalConfiguration;
+        this.smsapiProviderConfiguration = smsapiProviderConfiguration;
+    }
+
     @Bean
-    @ConditionalOnMissingBean
     public SmsSender smsSender() throws ClientException {
         Optional<ProviderConfiguration> providerConfigurationOptional = getProviderConfiguration();
 
@@ -39,7 +42,7 @@ public class SmsSenderAutoConfigure {
         }
 
         switch (providerConfigurationOptional.get().getType()) {
-            case SMSAPI: return new SmsapiSender((SmsapiProviderConfiguration) providerConfigurationOptional.get());
+            case SMSAPI: return new SmsapiSender(smsapiProviderConfiguration);
             default: return new EmptySender();
         }
     }
