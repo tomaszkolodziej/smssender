@@ -6,7 +6,8 @@
 
     <groupId>com.tolean</groupId>
     <artifactId>smssender</artifactId>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
+    <packaging>jar</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -143,8 +144,9 @@
                 <artifactId>asciidoctor-maven-plugin</artifactId>
                 <version>1.5.3</version>
                 <configuration>
-                    <outputDirectory>${project.basedir}</outputDirectory>
-                    <!--<backend>html</backend>-->
+                    <sourceDirectory>${project.basedir}</sourceDirectory>
+                    <outputDirectory>${project.build.directory}/generated-docs</outputDirectory>
+                    <backend>html</backend>
                     <attributes>
                         <projectVersion>${project.version}</projectVersion>
                     </attributes>
@@ -155,6 +157,30 @@
                         <phase>generate-resources</phase>
                         <goals>
                             <goal>process-asciidoc</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -177,12 +203,6 @@
         <repository>
             <id>maven-eu.nuxeo.org</id>
             <url>https://maven-eu.nuxeo.org/nexus/content/repositories/public-releases/</url>
-        </repository>
-        <repository>
-            <id>prime-repo</id>
-            <name>PrimeFaces Maven Repository</name>
-            <url>http://repository.primefaces.org</url>
-            <layout>default</layout>
         </repository>
         <repository>
             <releases>
