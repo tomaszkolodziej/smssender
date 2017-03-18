@@ -1,5 +1,4 @@
-[sidebar]
-*SMS Sender*
+= SMS Sender
 
 IMPORTANT: Należy ustawić wartość dla ustawienia `tolean.smssender.defaultProvider`
 
