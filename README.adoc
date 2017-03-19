@@ -6,7 +6,8 @@ IMPORTANT: Należy ustawić wartość dla ustawienia `tolean.smssender.defaultPr
 [horizontal]
 `tolean.smssender.defaultProvider`:: dostawca / bramka SMS. Dostępne wartości: SMSAPI
 `tolean.smssender.smsapi.username`:: nazwa użytkownika
-`tolean.smssender.smsapi.sender`:: hasło użytkownika (MD5)
+`tolean.smssender.smsapi.passwordHash`:: hasło użytkownika (MD5)
+`tolean.smssender.smsapi.sender`:: nazwa nadawcy wiadomości
 `tolean.smssender.smsapi.fast`:: ustawienie na `true` spowoduje wysłanie wiadomości przy pomcy osobnego kanału - szybkie wysłanie wiadomości
 `tolean.smssender.smsapi.flash`:: wiadomość zostanie automatycznie wysłana na panelu głównym telefonu i nie zostanie zapisana w wiadomościach odebranych
 `tolean.smssender.smsapi.test`:: wiadomość nie jest wysyłana, wyświetlana jest jedynie odpowiedź (w celach testowych)
